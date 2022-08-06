@@ -35,7 +35,6 @@ const Cart = (): JSX.Element => {
     updateProductAmount({
       amount: (product.amount+1),
       productId: product.id,
-      operation: 'add'
     })
   }
 
@@ -43,7 +42,6 @@ const Cart = (): JSX.Element => {
     updateProductAmount({
       amount: (product.amount-1),
       productId: product.id,
-      operation: 'sub'
     })
   }
 

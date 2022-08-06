@@ -10,7 +10,6 @@ interface CartProviderProps {
 interface UpdateProductAmount {
   productId: number;
   amount: number;
-  operation: 'add' | 'sub';
 }
 
 interface CartContextData {
@@ -41,7 +40,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         updateProductAmount({
           productId: productCartFinded.id,
           amount: (productCartFinded.amount+1),
-          operation: 'add'
         })
       }else{
         const dataProduct = await api.get<Product[]>('/products',{params:{id: productId}});
@@ -82,13 +80,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const updateProductAmount = async ({
     productId,
     amount,
-    operation,
   }: UpdateProductAmount) => {
     try {
       const dataStock = await api.get<Stock[]>('/stock',{params:{id: productId}});
       let stock = dataStock.data[0].amount;
 
-      if( (operation==='add' && (amount) > stock)){
+      if( ((amount) > stock)){
         toast.error('Quantidade solicitada fora de estoque');
       }else{
        const newCart = cart.map(item=>{
